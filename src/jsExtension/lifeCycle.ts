@@ -93,14 +93,6 @@ export default {
       key: Addon.key,
       title: Addon.title
     }
-    self.excerptStatus = {
-      isProcessNewExcerpt: false,
-      isChangeExcerptRange: false,
-      lastExcerptText: "😎",
-      OCROnline: { times: 0, status: "free" },
-      isModify: false,
-      lastRemovedComment: undefined
-    }
     self.customSelectedNodes = []
     self.globalProfile = deepCopy(defaultGlobalProfile)
     self.docProfile = deepCopy(defaultDocProfile)

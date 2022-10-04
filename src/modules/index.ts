@@ -5,8 +5,8 @@ import export2flomo from "./export2flomo"
 import export2obsidian from "./export2obsidian"
 import addon from "./addon"
 import { CellViewType } from "~/enum"
-import { MN } from "~/sdk"
 import { ISection } from "~/typings"
+import lang from "~/lang"
 
 export const modules = {
   export2anki,
@@ -28,19 +28,17 @@ export const more: ISection = {
     },
     {
       type: CellViewType.PlainText,
-      label: `OhMyMN ${MN.isZH ? "官网：" : "Website: "}ohmymn.marginnote.cn`,
+      label: lang.more.website,
       link: "https://ohmymn.marginnote.cn"
     },
     {
       type: CellViewType.PlainText,
-      label: `${MN.isZH ? "核心开发团队：" : "Core Team: "}ourongxing，Bryan`,
+      label: lang.more.core_team,
       link: "https://github.com/marginnoteapp/ohmymn"
     },
     {
       type: CellViewType.PlainText,
-      label: MN.isZH
-        ? "OhMyMN 是 MarginNote 插件控制面板及开发框架。OhMyMN 完全开源，官方支持，欢迎参与。"
-        : "OhMyMN is MarginNote addon control panel and development framework.OhMyMN is completely open source, officially supported, welcome to join.",
+      label: lang.more.intro,
       link: "https://github.com/marginnoteapp/ohmymn"
     },
     {

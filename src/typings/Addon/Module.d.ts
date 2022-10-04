@@ -1,6 +1,5 @@
 import { IAllProfile } from "~/profile"
 import { MbBookNote } from "../MarginNote"
-import { AutoUtilType, TypeUtilIndex } from "./AutoUtils"
 import { CellViewType } from "~/enum"
 
 export type IConfig<T extends keyof IAllProfile | null = null> = {
@@ -47,17 +46,10 @@ export type ISettingInput<T> = {
   check?: ICheckMethod
 } & Bind<T>
 
-export type ISettingSwitch<T> = (
-  | {
-      key: Exclude<PickKeyByValue<T, boolean>, "on">
-      type: CellViewType.Switch
-    }
-  | {
-      key: "on"
-      type: CellViewType.Switch
-      auto: TypeUtilIndex<AutoUtilType>
-    }
-) &
+export type ISettingSwitch<T> = {
+  key: PickKeyByValue<T, boolean>
+  type: CellViewType.Switch
+} &
   HelpLinkLabel &
   Bind<T>
 

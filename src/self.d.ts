@@ -1,4 +1,3 @@
-import { DirectionOfSelection } from "~/enum"
 import {
   UIView,
   UIWindow,

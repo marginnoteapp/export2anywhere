@@ -1,56 +1,10 @@
 import lang from "./lang"
 import { showHUD } from "./sdk"
 import { modules, constModules } from "./modules"
-import {
-  AutoUtilType,
-  TypeUtilFalseArray,
-  TypeUtilIndexFalseArray,
-  ICheckMethod,
-  IActionMethod4Text,
-  IActionMethod4Card
-} from "./typings"
+import { ICheckMethod, IActionMethod4Text, IActionMethod4Card } from "./typings"
 import { IAllProfile } from "./profile"
 export type ModuleKeyType = Exclude<keyof IAllProfile, "additional"> | "more"
 type AutoModuleKeyType = Include<ModuleKeyType, "auto">
-
-export const autoUtils = (() => {
-  try {
-    const res = Object.values(modules).reduce((acc, module) => {
-      for (const k of module.settings) {
-        if (k.key === "on" && "auto" in k) {
-          Object.entries(k.auto).forEach(([k, v]) => {
-            acc[k] = [
-              ...(acc[k] ?? []),
-              "index" in v
-                ? {
-                    index: v.index,
-                    method: async (...rest: Parameters<typeof v.method>) =>
-                      // @ts-ignore
-                      isModuleAutoON(module.key) && (await v.method(...rest))
-                  }
-                : {
-                    index: 0,
-                    // @ts-ignore
-                    method: async (...rest: Parameters<typeof v>) =>
-                      // @ts-ignore
-                      isModuleAutoON(module.key) && (await v(...rest))
-                  }
-            ]
-          })
-          break
-        }
-      }
-      return acc
-    }, {} as TypeUtilIndexFalseArray<AutoUtilType>)
-    return Object.entries(res).reduce((acc, [k, v]) => {
-      acc[k] = v.sort((a, b) => a.index - b.index).map(k => k.method)
-      return acc
-    }, {} as TypeUtilFalseArray<AutoUtilType>)
-  } catch (err) {
-    console.error(err)
-    return {}
-  }
-})()
 
 export const { actions4card, actions4text, checkers } = Object.values({
   ...constModules,
