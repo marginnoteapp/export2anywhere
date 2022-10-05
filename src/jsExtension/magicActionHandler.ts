@@ -15,7 +15,7 @@ import {
 } from "~/sdk"
 import { closePanel } from "./switchPanel"
 
-export default async (type: "card" | "text", row: IRowButton) => {
+export default async (row: IRowButton) => {
   switch (row.type) {
     case CellViewType.ButtonWithInput:
       while (1) {
@@ -37,7 +37,6 @@ export default async (type: "card" | "text", row: IRowButton) => {
         // Allowed to be empty
         if (text === "" || (text && (await checkInputCorrect(text, row.key)))) {
           await handleMagicAction({
-            type,
             key: row.key,
             option,
             content: text
@@ -59,7 +58,6 @@ export default async (type: "card" | "text", row: IRowButton) => {
       )
       if (option === -1) return
       await handleMagicAction({
-        type,
         key: row.key,
         option
       })
@@ -67,12 +65,10 @@ export default async (type: "card" | "text", row: IRowButton) => {
 }
 
 const handleMagicAction = async ({
-  type,
   key,
   option,
   content = ""
 }: {
-  type: "card" | "text"
   key: string
   option: number
   content?: string

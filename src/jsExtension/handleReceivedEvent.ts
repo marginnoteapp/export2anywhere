@@ -21,7 +21,7 @@ const onButtonClick: EventHandler = async sender => {
   // For magicaction
   console.log("Click a button", "event")
   const { row, type } = sender.userInfo
-  handleMagicAction(type, row)
+  handleMagicAction(row)
 }
 
 const onSwitchChange: EventHandler = async sender => {

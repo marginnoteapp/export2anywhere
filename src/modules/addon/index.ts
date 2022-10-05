@@ -4,22 +4,21 @@ import { CellViewType } from "~/enum"
 import { defineConfig } from "~/profile"
 import { lang } from "./lang"
 
-const { label, help, option } = lang
 export default defineConfig({
   name: Addon.title,
   key: "addon",
-  link: lang.link,
-  intro: lang.intro + Addon.version,
+  link: Addon.forum,
+  intro: lang.intro,
   settings: [
     {
-      help: help.profile,
+      help: lang.profile.help,
       key: "profile",
       type: CellViewType.Select,
-      option: option.profile,
-      label: label.profile
+      option: lang.profile.$option5,
+      label: lang.profile.label
     },
     {
-      label: label.quick_switch,
+      label: lang.quick_switch.label,
       key: "quickSwitch",
       type: CellViewType.MuiltSelect,
       option: []
@@ -27,37 +26,37 @@ export default defineConfig({
     {
       key: "panelPosition",
       type: CellViewType.Select,
-      option: option.panel_position,
-      label: label.panel_position
+      option: lang.panel_position.$option6,
+      label: lang.panel_position.label
     },
     {
       key: "panelHeight",
       type: CellViewType.Select,
-      option: option.panel_height,
-      label: label.panel_height
+      option: lang.panel_height.$option3,
+      label: lang.panel_height.label
     },
     {
       key: "panelControl",
       type: CellViewType.MuiltSelect,
-      option: option.panle_control,
-      label: label.panle_control
+      option: lang.panle_control.$option3,
+      label: lang.panle_control.label
     },
     {
       key: "autoBackup",
       type: CellViewType.Switch,
-      label: label.auto_backup
+      label: lang.auto_backup.label
     },
     {
       key: "backupID",
       type: CellViewType.Input,
-      help: "输入备份卡片链接，请确保该卡片有子卡片，否则无法写入。子卡片越多越好。",
+      help: lang.backup_ID.help,
       bind: ["autoBackup", true],
       check: ({ input }) => {
         const noteid = input.replace("marginnote3app://note/", "")
-        if (noteid === input) throw "不是卡片链接"
+        if (noteid === input) throw lang.backup_ID.not_link
         const node = MN.db.getNoteById(noteid)
-        if (!node) throw "卡片不存在"
-        if (!node.childNotes?.length) throw "卡片没有子卡片"
+        if (!node) throw lang.backup_ID.not_exit
+        if (!node.childNotes?.length) throw lang.backup_ID.no_child
       }
     }
   ]

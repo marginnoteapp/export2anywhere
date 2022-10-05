@@ -21,6 +21,7 @@ import {
 import { deepCopy } from "~/utils"
 import { eventHandlers } from "./handleReceivedEvent"
 import { closePanel, layoutViewController } from "./switchPanel"
+import { gestureHandlers } from "./handleGestureEvent"
 
 /**
  * Addon life cycle
@@ -119,6 +120,7 @@ export default {
       })
     // Add hooks, aka observers
     eventHandlers.add()
+    gestureHandlers().add()
   },
   documentDidOpen(docmd5: string) {
     // Switch document, read doc profile
@@ -143,6 +145,7 @@ export default {
     closePanel()
     // Remove hooks, aka observers
     eventHandlers.remove()
+    gestureHandlers().remove()
   },
   documentWillClose(docmd5: string) {
     console.log("Close a document", "lifeCycle")

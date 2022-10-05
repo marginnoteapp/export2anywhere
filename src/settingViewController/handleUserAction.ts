@@ -28,8 +28,7 @@ async function tableViewDidSelectRowAtIndexPath(
     case CellViewType.Button:
       if (sec.key === "magicaction4card")
         postNotification(Addon.key + "ButtonClick", {
-          row,
-          type: "card"
+          row
         })
   }
 }
