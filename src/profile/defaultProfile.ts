@@ -119,21 +119,6 @@ const defaultNotebookProfile = {
   }
 }
 
-// Cache Regex like [//,//];[//,//] 和 (//,"",0);(//,"",0);
-const defaultTempProfile = {
-  replaceParam: {},
-  regArray: {}
-}
-
-export const customKey = [
-  ...Object.keys(defaultTempProfile.regArray),
-  ...Object.keys(defaultTempProfile.replaceParam)
-]
 export const rewriteSelection: RewriteCase[] = []
 
-export {
-  defaultGlobalProfile,
-  defaultDocProfile,
-  defaultTempProfile,
-  defaultNotebookProfile
-}
+export { defaultGlobalProfile, defaultDocProfile, defaultNotebookProfile }

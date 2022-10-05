@@ -1,6 +1,6 @@
 import { CellViewType } from "~/enum"
 import { defineConfig } from "~/profile"
-import { checkPlainText, checkRegArray, string2RegArray } from "~/utils"
+import { checkRegArray, string2RegArray, doc } from "~/utils"
 import {
   showHUD,
   HUDController,
@@ -12,49 +12,38 @@ import {
 import { lang } from "./lang"
 import { FilterCards } from "./typings"
 
-const { help, option, intro, label, link, hud } = lang
-
 export default defineConfig({
   name: "MagicAction for Card",
   key: "magicaction4card",
-  intro,
-  link,
+  intro: lang.intro,
+  link: doc("magicaction4card"),
   settings: [
     {
       key: "smartSelection",
       type: CellViewType.Switch,
-      label: label.smart_selection
-    },
-    {
-      key: "defaultMergeText",
-      type: CellViewType.Input,
-      help: "合并卡片内文字时的前后修饰，默认添加序号和换行（$&代表每一段），点击查看自定义方法。                 ",
-      link: "https://ohmymn.marginnote.cn/guide/modules/magicaction4card.html#%E5%90%88%E5%B9%B6%E5%8D%A1%E7%89%87%E5%86%85%E6%96%87%E5%AD%97",
-      check({ input }) {
-        checkPlainText(input)
-        if (!input.includes("$&")) throw "缺少 $&"
-      }
+      label: lang.smart_selection.label,
+      help: lang.smart_selection.help
     }
   ],
   actions4card: [
     {
       key: "manageProfile",
       type: CellViewType.Button,
-      label: label.manage_profile,
-      option: option.manage_profile,
-      help: help.manage_profile,
+      label: lang.manage_profile.label,
+      option: lang.manage_profile.$option4,
+      help: lang.manage_profile.help,
       method: () => {
-        return
+        console.log()
       }
     },
     {
       type: CellViewType.ButtonWithInput,
-      label: label.filter_cards,
-      option: option.filter_cards,
-      key: "filterCards",
+      label: lang.filter_cards.label,
+      option: lang.filter_cards.$option5,
+      key: "filterCard",
       method({ nodes, content, option }) {
         if (!content) {
-          showHUD(hud.none_card)
+          showHUD(lang.none_card)
           return []
         }
         const regGroup = string2RegArray(content)
@@ -67,7 +56,7 @@ export default defineConfig({
               case FilterCards.Tag:
                 return getAllTags(node).join(" ")
               case FilterCards.Excerpt:
-                return getExcerptText(node).ocr.join("\n")
+                return getExcerptText(node).text.join("\n")
               case FilterCards.Comment:
                 return getAllCommnets(node).nopic.join("\n")
               default:
@@ -79,10 +68,10 @@ export default defineConfig({
           )
         })
         if (customSelectedNodes.length) {
-          HUDController.show(hud.is_clicked)
+          HUDController.show(lang.is_selected)
           return customSelectedNodes
         } else {
-          showHUD(hud.none_card)
+          showHUD(lang.none_card)
           return []
         }
       },

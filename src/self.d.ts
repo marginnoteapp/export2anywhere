@@ -6,12 +6,7 @@ import {
   ISection,
   UITableViewController
 } from "~/typings"
-import {
-  IDocProfile,
-  IGlobalProfile,
-  ITempProfile,
-  INotebookProfile
-} from "~/profile"
+import { IDocProfile, IGlobalProfile, INotebookProfile } from "~/profile"
 
 declare global {
   const self: {
@@ -36,7 +31,6 @@ declare global {
     customSelectedNodes: MbBookNote[]
     docProfile: IDocProfile
     globalProfile: IGlobalProfile
-    tempProfile: ITempProfile
     notebookProfile: INotebookProfile
     dataSource: ISection[]
     allGlobalProfile: IGlobalProfile[]

@@ -1,41 +1,8 @@
 import { dataSourceIndex } from "~/dataSource"
 import { layoutViewController } from "~/jsExtension/switchPanel"
-import {
-  customKey,
-  IGlobalProfile,
-  IDocProfile,
-  INotebookProfile
-} from "~/profile"
+import { IGlobalProfile, IDocProfile, INotebookProfile } from "~/profile"
 import { IRowSwitch, IRowInlineInput, IRowInput, IRowSelect } from "~/typings"
-import {
-  deepCopy,
-  string2RegArray,
-  ReplaceParam,
-  string2ReplaceParam
-} from "~/utils"
-import { getMNLinkValue } from "./utils"
-
-export function updateProfileTemp(key: string, val: string) {
-  const newValue = customKey.includes(key) ? getMNLinkValue(val) : val
-  if (key in self.tempProfile.regArray) {
-    let tmp: RegExp[][] | undefined
-    // Avoid the error after modification is not corrected
-    try {
-      tmp = newValue ? string2RegArray(newValue) : undefined
-    } catch {
-      tmp = undefined
-    }
-    self.tempProfile.regArray[key] = tmp
-  } else if (key in self.tempProfile.replaceParam) {
-    let tmp: ReplaceParam[] | undefined
-    try {
-      tmp = newValue ? string2ReplaceParam(newValue) : undefined
-    } catch {
-      tmp = undefined
-    }
-    self.tempProfile.replaceParam[key] = tmp
-  }
-}
+import { deepCopy } from "~/utils"
 
 export function updateProfileDataSource(
   profile: IGlobalProfile | IDocProfile | INotebookProfile,
@@ -63,7 +30,6 @@ export function updateProfileDataSource(
               self.dataSource[section].rows[row] as IRowInlineInput | IRowInput
             ).content = newValue
             _[key] = newValue
-            updateProfileTemp(key, newValue)
             break
           default:
             if (Array.isArray(newValue)) {

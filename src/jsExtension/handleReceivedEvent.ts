@@ -2,7 +2,7 @@ import { Addon } from "~/addon"
 import { layoutViewController } from "~/jsExtension/switchPanel"
 import lang from "~/lang"
 import { EventHandler } from "~/typings"
-import { saveProfile, updateProfileTemp } from "~/profile"
+import { saveProfile } from "~/profile"
 import { eventHandlerController, isThisWindow, showHUD } from "~/sdk"
 import handleMagicAction from "./magicActionHandler"
 
@@ -50,7 +50,6 @@ const onInputOver: EventHandler = async sender => {
   if (!isThisWindow(sender)) return
   console.log("Input", "event")
   const { name, key, content } = sender.userInfo
-  updateProfileTemp(key, content)
   showHUD(content ? lang.input_saved : lang.input_clear)
   await saveProfile(name, key, content)
 }

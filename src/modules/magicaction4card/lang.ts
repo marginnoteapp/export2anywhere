@@ -1,71 +1,107 @@
 import { MN } from "~/sdk"
+import { doc } from "~/utils"
 
 const zh = {
   intro: "所有动作均需要先选中卡片。点击查看具体的使用方法和注意事项。",
-  link: "https://ohmymn.marginnote.cn/guide/modules/magicaction4card.html",
-  option: {
-    filter_cards: ["所有", "标题", "摘录", "评论", "标签"] as Tuple<string, 5>,
-    switch_title: ["切换为不存在的", "交换标题和摘录"],
-    merge_text: ["合并为摘录", "合并为评论"],
-    merge_cards: ["同时合并标题", "不合并标题"],
-    manage_profile: ["读取配置", "写入配置"] as Tuple<string, 2>
+  default_merge_text: {
+    help: "合并卡片内文字时的前后修饰，默认添加序号和换行（$&代表每一段），点击查看自定义方法。                 ",
+    error: "缺少 $&",
+    link: doc("magicaction4card", "合并卡片内文字")
   },
-  help: {
-    merge_text: "输入分隔符",
-    switch_title: "当两者都存在时请使用「交换标题和摘录」",
-    rename_title: "现在可以分层进行编号",
-    manage_profile:
-      "请确保该卡片至少有一张子卡片！多张子卡片可以一起分担配置，防止单张卡片字数过多。"
+  rename_title: {
+    label: "重命名标题",
+    help: `$& 指代原标题。输入 "%['1'] $&" 可快速为选中卡片标题编号。`
   },
-  label: {
-    switch_title: "切换摘录标题",
-    filter_cards: "筛选卡片",
-    merge_cards: "合并卡片",
-    merge_text: "合并卡片内文字",
-    rename_title: "重命名标题",
-    manage_profile: "配置管理",
-    smart_selection: "智能选择"
+  smart_selection: {
+    label: "智能选择",
+    help: "帮助你快速选中子卡片，后代卡片"
   },
-  hud: {
-    is_clicked: "您需要的卡片已选中，请继续操作",
-    none_card: "未找到符合的卡片",
-    hierarchical_numbering: "请确保选中的每张卡片均为同层级且都有子卡片"
-  }
+  filter_cards: {
+    label: "筛选卡片",
+    $option5: ["所有", "标题", "摘录", "评论", "标签"] as StringTuple<5>
+  },
+  switch_title: {
+    label: "切换摘录标题",
+    help: "当两者都存在时请使用「交换标题和摘录」",
+    $option2: ["切换为不存在的", "交换标题和摘录"] as StringTuple<2>
+  },
+  merge_text: {
+    label: "合并卡片内文字",
+    help: "仅支持合并文字摘录和文字评论，不合并标签和链接，其余内容会在合并后置顶",
+    is_excerpt_pic:
+      "检测到当前摘录为图片，合并为摘录后仍旧是图片，是否继续合并为摘录？",
+    $excerpt_pic_option2: ["继续", "合并为评论"] as StringTuple<2>,
+    $option2: ["合并为摘录", "合并为评论"] as StringTuple<2>
+  },
+  merge_cards: {
+    label: "合并卡片",
+    $option2: ["同时合并标题", "不合并标题"] as StringTuple<2>
+  },
+  manage_profile: {
+    label: "配置管理",
+    $option4: [
+      "读取配置",
+      "写入配置",
+      "重置配置",
+      "同步其他窗口的配置"
+    ] as StringTuple<4>,
+    help: "写入配置时请确保该卡片至少有一张子卡片。多张子卡片可以一起分担配置，防止单张卡片字数过多。"
+  },
+  is_selected: "您需要的卡片已选中，请继续操作",
+  none_card: "未找到符合的卡片",
+  hierarchical_numbering: "请确保选中的每张卡片均为同层级且都有子卡片"
 }
 
 const en: typeof zh = {
   intro:
     "All actions need to select the card first. Click for the specific useage",
-  link: "https://www.notion.so/huangkewei/MagicAction-79afa352bad141f58075841614ded734",
-  option: {
-    switch_title: ["Switch to Another", "Swap Title and Excerpt"],
-    filter_cards: ["All", "Title", "Excerpt", "Comment", "Tag"],
-    merge_text: ["Merged as Excerpt", "Merged as Comment"],
-    merge_cards: ["Merge Title", "Not Merge Titles"],
-    manage_profile: ["Read Profile", "Write Profile"]
+  smart_selection: {
+    label: "Smart Selector",
+    help: "Help you quickly select the child card and descendant card"
   },
-  help: {
-    switch_title: "Use [Swap Title and Excerpt] when both are present」",
-    merge_text: "Input delimiter",
-    rename_title: "Now it can be hierarchical numbered",
-    manage_profile:
-      "It is forbidden to directly modify the configuration information, and the existing configuration will be overwritten after reading"
+  default_merge_text: {
+    help: "The default prefix and suffix of the merged text. Click to see the custom method.                 ",
+    error: "Missing $&",
+    link: doc("magicaction4card", "合并卡片内文字")
   },
-  label: {
-    smart_selection: "Smart Selector",
-    switch_title: "Switch Excerption or Title",
-    filter_cards: "Filter Cards",
-    merge_cards: "Merge Multiple Cards",
-    merge_text: "Merge Text in Cards",
-    rename_title: "Rename Titles",
-    manage_profile: "Configuration Management"
+  switch_title: {
+    help: "Use [Swap Title and Excerpt] when both are present」",
+    label: "Switch Excerption or Title",
+    $option2: ["Switch to Non-Existent", "Swap Title and Excerpt"]
   },
-  hud: {
-    is_clicked: "The card is selected, please continue",
-    none_card: "No matching cards found",
-    hierarchical_numbering:
-      "Ensure that each selected card is at the same level and has child node"
-  }
+  filter_cards: {
+    label: "Filter Cards",
+    $option5: ["All", "Title", "Excerpt", "Comment", "Tag"]
+  },
+  merge_text: {
+    label: "Merge Text",
+    help: "Only support merging text excerpt and text comment, not merging tags and link, other content will be pinned after merging",
+    $excerpt_pic_option2: ["Continue", "Merge as Comment"],
+    is_excerpt_pic: "The excerpt is a picture, continue to merge as excerpt?",
+    $option2: ["Merged as Excerpt", "Merged as Comment"]
+  },
+  merge_cards: {
+    label: "Merge Multiple Cards",
+    $option2: ["Merge Title", "Not Merge Titles"]
+  },
+  manage_profile: {
+    label: "Manage Profile",
+    $option4: [
+      "Read Profile",
+      "Write Profile",
+      "Reset Profile",
+      "Sync Profile with Other Windows"
+    ],
+    help: "Please make sure that the card has at least one child card when writing the profile. Multiple child cards can share the profile together to prevent a single card from having too many words."
+  },
+  rename_title: {
+    help: `$& refers to the original title. Enter "%['1'] $&" to Quickly number the selected card title.`,
+    label: "Rename Titles"
+  },
+  is_selected: "The card is selected, please continue",
+  none_card: "No matching cards found",
+  hierarchical_numbering:
+    "Ensure that each selected card is at the same level and has child node"
 }
 
 export const lang = MN.isZH ? zh : en

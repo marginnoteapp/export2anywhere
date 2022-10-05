@@ -15,78 +15,55 @@ import {
 } from "~/sdk"
 import { closePanel } from "./switchPanel"
 
-export default async (
-  type: "card" | "text",
-  row: IRowButton,
-  option?: number,
-  content?: string
-) => {
-  if (option !== undefined && content !== undefined) {
-    const text = content ? getMNLinkValue(content) : ""
-    // Allowed to be empty
-    if (text === "" || (text && (await checkInputCorrect(text, row.key)))) {
-      await handleMagicAction({
-        type,
-        key: row.key,
-        option,
-        content: text
-      })
-      return
-    }
-  } else if (option !== undefined) {
-    await handleMagicAction({ type, key: row.key, option })
-  } else
-    switch (row.type) {
-      case CellViewType.ButtonWithInput:
-        while (1) {
-          const { option, content } = await popup(
-            {
-              title: row.label,
-              message: row.help ?? "",
-              type: UIAlertViewStyle.PlainTextInput,
-              // It is better to have only two options, because then the last option will be automatically selected after the input
-              buttons: row.option ? row.option : [lang.sure]
-            },
-            ({ alert, buttonIndex }) => ({
-              content: alert.textFieldAtIndex(0).text,
-              option: buttonIndex
-            })
-          )
-          if (option === -1) return
-          const text = content ? getMNLinkValue(content) : ""
-          // Allowed to be empty
-          if (
-            text === "" ||
-            (text && (await checkInputCorrect(text, row.key)))
-          ) {
-            await handleMagicAction({
-              type,
-              key: row.key,
-              option,
-              content: text
-            })
-            return
-          }
-        }
-      case CellViewType.Button:
-        const { option } = await popup(
+export default async (type: "card" | "text", row: IRowButton) => {
+  switch (row.type) {
+    case CellViewType.ButtonWithInput:
+      while (1) {
+        const { option, content } = await popup(
           {
             title: row.label,
             message: row.help ?? "",
-            type: UIAlertViewStyle.Default,
-            buttons: row.option ?? [lang.sure]
+            type: UIAlertViewStyle.PlainTextInput,
+            // It is better to have only two options, because then the last option will be automatically selected after the input
+            buttons: row.option ? row.option : [lang.sure]
           },
-          ({ buttonIndex }) => ({
+          ({ alert, buttonIndex }) => ({
+            content: alert.textFieldAtIndex(0).text,
             option: buttonIndex
           })
         )
         if (option === -1) return
-        await handleMagicAction({
-          type,
-          key: row.key,
-          option
+        const text = content ? getMNLinkValue(content) : ""
+        // Allowed to be empty
+        if (text === "" || (text && (await checkInputCorrect(text, row.key)))) {
+          await handleMagicAction({
+            type,
+            key: row.key,
+            option,
+            content: text
+          })
+          return
+        }
+      }
+    case CellViewType.Button:
+      const { option } = await popup(
+        {
+          title: row.label,
+          message: row.help ?? "",
+          type: UIAlertViewStyle.Default,
+          buttons: row.option ?? [lang.sure]
+        },
+        ({ buttonIndex }) => ({
+          option: buttonIndex
         })
-    }
+      )
+      if (option === -1) return
+      await handleMagicAction({
+        type,
+        key: row.key,
+        option
+      })
+  }
 }
 
 const handleMagicAction = async ({

@@ -5,7 +5,6 @@ import {
   defaultDocProfile,
   defaultGlobalProfile,
   defaultNotebookProfile,
-  defaultTempProfile,
   Range,
   readProfile,
   removeProfile
@@ -97,7 +96,6 @@ export default {
     self.globalProfile = deepCopy(defaultGlobalProfile)
     self.docProfile = deepCopy(defaultDocProfile)
     self.notebookProfile = deepCopy(defaultNotebookProfile)
-    self.tempProfile = deepCopy(defaultTempProfile)
     self.dataSource = deepCopy(dataSourcePreset)
 
     const SettingViewController = JSB.defineClass(

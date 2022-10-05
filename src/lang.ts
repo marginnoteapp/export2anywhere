@@ -57,7 +57,7 @@ const zh = {
     website: "OhMyMN 官网：ohmymn.marginnote.cn",
     core_team: "核心开发团队：ourongxing，Bryan",
     intro:
-      "OhMyMN 是一个可以自动处理摘录的强大插件，同时也是 MarginNote 插件开发框架。OhMyMN 完全开源，官方支持，欢迎参与。"
+      "OhMyMN 是 MarginNote 插件开发框架。OhMyMN 完全开源，官方支持，欢迎参与。"
   }
 }
 

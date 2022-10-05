@@ -1,9 +1,7 @@
 import { Addon } from "~/addon"
-import { actionKey4Text, actionKey4Card } from "~/dataSource"
-import lang from "~/lang"
-import { checkInputCorrect, moduleKeys, ModuleKeyType } from "~/mergeMethod"
+import { checkInputCorrect } from "~/mergeMethod"
 import { CellViewType } from "~/enum"
-import { MN, popup, openUrl, postNotification } from "~/sdk"
+import { MN, openUrl, postNotification } from "~/sdk"
 import { _isModuleOFF } from "./settingView"
 import { UITableView, IRowInput, IRowSwitch, IRowSelect } from "~/typings"
 import { byteLength } from "~/utils"
@@ -132,46 +130,12 @@ function clickSelectButton(sender: UIButton) {
   const menuController = MenuController.new()
   const height = 44
   const zero = 0.00001
-  const cacheModuleOFF: Partial<Record<ModuleKeyType, boolean>> = {}
-  const isHidden = (sectionKey: string, rowKey: string, index: number) => {
-    try {
-      if (sectionKey === "gesture") {
-        const { module } = rowKey.includes("selectionBar")
-          ? actionKey4Text[index]
-          : actionKey4Card[index]
-        if (!module) return false
-        const status = cacheModuleOFF[module]
-        if (status !== undefined) {
-          return status
-        } else {
-          const status = _isModuleOFF(module)
-          cacheModuleOFF[module] = status
-          return status
-        }
-      } else if (sectionKey === "shortcut") {
-        const { module } = rowKey.includes("text")
-          ? actionKey4Text[index]
-          : actionKey4Card[index]
-        if (!module) return false
-        const status = cacheModuleOFF[module]
-        if (status !== undefined) {
-          return status
-        } else {
-          const status = _isModuleOFF(module)
-          cacheModuleOFF[module] = status
-          return status
-        }
-      } else return false
-    } catch {
-      return true
-    }
-  }
 
   menuController.commandTable = row.option.map((item, index) => ({
     title: item,
     object: self,
     selector: "selectAction:",
-    height: isHidden(section.key, row.key, index) ? zero : height,
+    height,
     param: {
       indexPath,
       menuController,
