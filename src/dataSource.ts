@@ -2,7 +2,7 @@ import lang from "./lang"
 import { more, constModules, modules } from "./modules"
 import { ModuleKeyType } from "./mergeMethod"
 import { ISection, IConfig, IRow } from "./typings"
-import { CellViewType } from "./enum"
+import { CellViewType } from "~/typings"
 import { serialSymbols } from "./utils"
 
 const { addon, magicaction4card } = constModules

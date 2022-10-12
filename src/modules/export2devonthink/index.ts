@@ -1,5 +1,5 @@
-import { CellViewType } from "~/enum"
-import { openUrl, showHUD } from "~/sdk"
+import { CellViewType } from "~/typings"
+import { openUrl, showHUD } from "marginnote"
 import { lang } from "./lang"
 import { getContent } from "./utils"
 import { defineConfig } from "~/profile"

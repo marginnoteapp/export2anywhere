@@ -1,4 +1,4 @@
-import { MbBookNote } from "~/typings"
+import type { MbBookNote } from "marginnote"
 import { ExportMethod } from "./typings"
 
 export function getDtContent(

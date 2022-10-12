@@ -1,4 +1,3 @@
-import { MN } from "~/sdk"
 import lang from "~/lang"
 import {
   escapeDoubleQuote,
@@ -7,6 +6,7 @@ import {
   string2ReplaceParam
 } from "./input"
 import { getMNLinkValue } from "../profile/utils"
+import { MN } from "marginnote"
 
 export function checkPlainText(input: string) {
   reverseEscape(`${escapeDoubleQuote(input)}`, true)

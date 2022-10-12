@@ -1,5 +1,5 @@
 import { ModuleKeyType } from "~/mergeMethod"
-import { CellViewType } from "~/enum"
+import { CellViewType } from "."
 
 export type ISection = {
   key: ModuleKeyType

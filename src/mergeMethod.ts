@@ -1,10 +1,9 @@
 import lang from "./lang"
-import { showHUD } from "./sdk"
 import { modules, constModules } from "./modules"
 import { ICheckMethod, IActionMethod4Card } from "./typings"
 import { IAllProfile } from "./profile"
+import { showHUD } from "marginnote"
 export type ModuleKeyType = Exclude<keyof IAllProfile, "additional"> | "more"
-type AutoModuleKeyType = Include<ModuleKeyType, "auto">
 
 export const { actions4card, checkers } = Object.values({
   ...constModules,
@@ -31,6 +30,7 @@ export const { actions4card, checkers } = Object.values({
     checkers: {} as Record<string, ICheckMethod>
   }
 )
+
 export const moduleKeys = Object.values(modules).reduce((acc, cur) => {
   acc.push(cur.key)
   return acc
@@ -55,18 +55,4 @@ export async function checkInputCorrect(
     return false
   }
   return true
-}
-
-function isModuleAutoON(key: AutoModuleKeyType) {
-  const { quickSwitch } = self.globalProfile.addon
-  return (
-    quickSwitch.includes(moduleKeys.indexOf(key)) &&
-    //@ts-ignore
-    (self.globalProfile[key]?.on ??
-      //@ts-ignore
-      self.docProfile[key]?.on ??
-      //@ts-ignore
-      self.notebookProfile[key]?.on ??
-      false)
-  )
 }

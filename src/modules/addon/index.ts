@@ -1,6 +1,6 @@
 import { Addon } from "~/addon"
-import { MN } from "~/sdk"
-import { CellViewType } from "~/enum"
+import { MN } from "marginnote"
+import { CellViewType } from "~/typings"
 import { defineConfig } from "~/profile"
 import { lang } from "./lang"
 

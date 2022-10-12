@@ -1,5 +1,5 @@
 import { Addon } from "~/addon"
-import { MN } from "~/sdk"
+import { MN } from "marginnote"
 
 const zh = {
   note_title: `${Addon.title} 配置`,

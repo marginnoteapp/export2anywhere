@@ -1,4 +1,4 @@
-import { MN } from "~/sdk"
+import { MN } from "marginnote"
 
 const zh = {
   intro: "导出到 Flomo。建议使用 API 导入。",

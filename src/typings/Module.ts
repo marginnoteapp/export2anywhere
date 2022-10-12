@@ -1,6 +1,6 @@
+import { MbBookNote } from "marginnote"
 import { IAllProfile } from "~/profile"
-import { MbBookNote } from "../MarginNote"
-import { CellViewType } from "~/enum"
+import { CellViewType } from "."
 
 export type IConfig<T extends keyof IAllProfile | null = null> = {
   name: string

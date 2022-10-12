@@ -4,15 +4,14 @@ import export2devonthink from "./export2devonthink"
 import export2flomo from "./export2flomo"
 import export2obsidian from "./export2obsidian"
 import addon from "./addon"
-import { CellViewType } from "~/enum"
-import { ISection } from "~/typings"
+import { CellViewType, ISection } from "~/typings"
 import lang from "~/lang"
 
 export const modules = {
   export2anki,
-  export2devonthink,
   export2flomo,
-  export2obsidian
+  export2obsidian,
+  export2devonthink
 }
 
 export const constModules = { addon, magicaction4card }

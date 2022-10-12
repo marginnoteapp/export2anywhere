@@ -1,5 +1,11 @@
-import type { MbBookNote } from "~/typings"
-import { getAncestorNodes, getNodeTree, getAllCommnets ,MN, getExcerptText } from "~/sdk"
+import type { MbBookNote } from "marginnote"
+import {
+  getExcerptText,
+  getAllCommnets,
+  getNodeTree,
+  getAncestorNodes,
+  MN
+} from "marginnote"
 
 export function getExcerptNotes(node: MbBookNote) {
   return node.comments.reduce((acc, cur) => {
@@ -13,13 +19,12 @@ export function getExcerptNotes(node: MbBookNote) {
 export function getAllText(
   node: MbBookNote,
   separator = "\n",
-  highlight = true,
-  mdsize = ""
+  highlight = true
 ) {
   // console.log(utils.getExcerptNotes(node),"export2devonthink")
   return [
-    ...getExcerptText(node, highlight, mdsize).md,
-    ...getAllCommnets(node, mdsize).md,
+    ...getExcerptText(node, highlight).md,
+    ...getAllCommnets(node).md,
     ...getExcerptNotes(node),
     `[](marginnote3app://note/${node.noteId})`,
     `^${node.noteId}`
@@ -36,8 +41,8 @@ export function getAllOCR(
 ) {
   // console.log(utils.getExcerptNotes(node),"export2devonthink")
   return [
-    ...getExcerptText(node, highlight, mdsize).ocr,
-    ...getAllCommnets(node, mdsize).nopic,
+    ...getExcerptText(node, highlight).ocr,
+    ...getAllCommnets(node).text,
     ...getExcerptNotes(node),
     `[](marginnote3app://note/${node.noteId})`,
     `^${node.noteId}`
@@ -55,12 +60,8 @@ export function makeObsidianOutline(
   if (imgprocess == 0) {
     if (method == 0) {
       let res = node.noteTitle
-        ? "- " +
-          node.noteTitle +
-          "\n" +
-          getAllText(node, "\n", false, mdsize) +
-          "\n"
-        : "- " + getAllText(node, "\n", false, mdsize) + "\n"
+        ? "- " + node.noteTitle + "\n" + getAllText(node, "\n", false) + "\n"
+        : "- " + getAllText(node, "\n", false) + "\n"
       const { treeIndex, onlyChildren } = getNodeTree(node)
       // console.log(treeIndex,"export2devonthink")
       for (let i = 0; i < onlyChildren.length; i++) {
@@ -68,8 +69,7 @@ export function makeObsidianOutline(
         const titleAndcomment = getAllText(
           onlyChildren[i],
           "\n" + "  ".repeat(treeIndex[i].length),
-          true,
-          mdsize
+          true
         )
         if (onlyChildren[i].noteTitle) {
           res =
@@ -105,8 +105,7 @@ export function makeObsidianOutline(
             const titleAndcomment = getAllText(
               newNote,
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res =
               res +
@@ -121,16 +120,14 @@ export function makeObsidianOutline(
             const titleAndcomment = getAllText(
               newNote,
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res = res + "  ".repeat(i) + "- " + titleAndcomment + "\n"
           } else {
             const titleAndcomment = getAllText(
               parentNotes[parentNotes.length - i - 1],
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res = res + "  ".repeat(i) + "- " + titleAndcomment + "\n"
           }
@@ -138,8 +135,7 @@ export function makeObsidianOutline(
           const titleAndcomment = getAllText(
             parentNotes[parentNotes.length - i - 1],
             "\n" + "  ".repeat(i),
-            true,
-            mdsize
+            true
           )
           if (parentNotes[parentNotes.length - i - 1].noteTitle) {
             res =
@@ -165,21 +161,18 @@ export function makeObsidianOutline(
           node.noteTitle +
           "\n" +
           "  ".repeat(parentNotes.length) +
-          getAllText(node, "\n" + "  ".repeat(parentNotes.length), true, mdsize)
+          getAllText(node, "\n" + "  ".repeat(parentNotes.length), true)
       } else {
         res =
           res +
           "  ".repeat(parentNotes.length) +
           "- " +
-          getAllText(node, "\n" + "  ".repeat(parentNotes.length), true, mdsize)
+          getAllText(node, "\n" + "  ".repeat(parentNotes.length), true)
       }
       return res
     } else if (method == 2) {
       const parentNotes = getAncestorNodes(node)
       let res = ""
-      console.log("qweqweq", "export2devonthink")
-      console.log(parentNotes[0], "export2devonthink")
-      console.log(parentNotes[parentNotes.length - 1], "export2devonthink")
       for (let i = 0; i < parentNotes.length; i++) {
         if (i == 0) {
           const groupNoteID =
@@ -189,8 +182,7 @@ export function makeObsidianOutline(
             const titleAndcomment = getAllText(
               newNote,
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res =
               res +
@@ -205,16 +197,14 @@ export function makeObsidianOutline(
             const titleAndcomment = getAllText(
               newNote,
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res = res + "  ".repeat(i) + "- " + titleAndcomment + "\n"
           } else {
             const titleAndcomment = getAllText(
               parentNotes[parentNotes.length - i - 1],
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res = res + "  ".repeat(i) + "- " + titleAndcomment + "\n"
           }
@@ -222,8 +212,7 @@ export function makeObsidianOutline(
           const titleAndcomment = getAllText(
             parentNotes[parentNotes.length - i - 1],
             "\n" + "  ".repeat(i),
-            true,
-            mdsize
+            true
           )
           if (parentNotes[parentNotes.length - i - 1].noteTitle) {
             res =
@@ -249,24 +238,14 @@ export function makeObsidianOutline(
           node.noteTitle +
           "\n" +
           "  ".repeat(parentNotes.length) +
-          getAllText(
-            node,
-            "\n" + "  ".repeat(parentNotes.length),
-            true,
-            mdsize
-          ) +
+          getAllText(node, "\n" + "  ".repeat(parentNotes.length), true) +
           "\n"
       } else {
         res =
           res +
           "  ".repeat(parentNotes.length) +
           "- " +
-          getAllText(
-            node,
-            "\n" + "  ".repeat(parentNotes.length),
-            true,
-            mdsize
-          ) +
+          getAllText(node, "\n" + "  ".repeat(parentNotes.length), true) +
           "\n"
       }
 
@@ -278,8 +257,7 @@ export function makeObsidianOutline(
         const titleAndcomment = getAllText(
           onlyChildren[i],
           "\n" + "  ".repeat(treeIndex[i].length + indent),
-          true,
-          mdsize
+          true
         )
         if (onlyChildren[i].noteTitle) {
           res =
@@ -318,8 +296,7 @@ export function makeObsidianOutline(
         const titleAndcomment = getAllOCR(
           onlyChildren[i],
           "\n" + "  ".repeat(treeIndex[i].length),
-          true,
-          mdsize
+          true
         )
         if (onlyChildren[i].noteTitle) {
           res =
@@ -355,8 +332,7 @@ export function makeObsidianOutline(
             const titleAndcomment = getAllOCR(
               newNote,
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res =
               res +
@@ -371,16 +347,14 @@ export function makeObsidianOutline(
             const titleAndcomment = getAllOCR(
               newNote,
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res = res + "  ".repeat(i) + "- " + titleAndcomment + "\n"
           } else {
             const titleAndcomment = getAllOCR(
               parentNotes[parentNotes.length - i - 1],
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res = res + "  ".repeat(i) + "- " + titleAndcomment + "\n"
           }
@@ -388,8 +362,7 @@ export function makeObsidianOutline(
           const titleAndcomment = getAllOCR(
             parentNotes[parentNotes.length - i - 1],
             "\n" + "  ".repeat(i),
-            true,
-            mdsize
+            true
           )
           if (parentNotes[parentNotes.length - i - 1].noteTitle) {
             res =
@@ -438,8 +411,7 @@ export function makeObsidianOutline(
             const titleAndcomment = getAllOCR(
               newNote,
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res =
               res +
@@ -454,16 +426,14 @@ export function makeObsidianOutline(
             const titleAndcomment = getAllOCR(
               newNote,
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res = res + "  ".repeat(i) + "- " + titleAndcomment + "\n"
           } else {
             const titleAndcomment = getAllOCR(
               parentNotes[parentNotes.length - i - 1],
               "\n" + "  ".repeat(i),
-              true,
-              mdsize
+              true
             )
             res = res + "  ".repeat(i) + "- " + titleAndcomment + "\n"
           }
@@ -471,8 +441,7 @@ export function makeObsidianOutline(
           const titleAndcomment = getAllOCR(
             parentNotes[parentNotes.length - i - 1],
             "\n" + "  ".repeat(i),
-            true,
-            mdsize
+            true
           )
           if (parentNotes[parentNotes.length - i - 1].noteTitle) {
             res =
@@ -498,24 +467,14 @@ export function makeObsidianOutline(
           node.noteTitle +
           "\n" +
           "  ".repeat(parentNotes.length) +
-          getAllOCR(
-            node,
-            "\n" + "  ".repeat(parentNotes.length),
-            true,
-            mdsize
-          ) +
+          getAllOCR(node, "\n" + "  ".repeat(parentNotes.length), true) +
           "\n"
       } else {
         res =
           res +
           "  ".repeat(parentNotes.length) +
           "- " +
-          getAllOCR(
-            node,
-            "\n" + "  ".repeat(parentNotes.length),
-            true,
-            mdsize
-          ) +
+          getAllOCR(node, "\n" + "  ".repeat(parentNotes.length), true) +
           "\n"
       }
 
@@ -527,8 +486,7 @@ export function makeObsidianOutline(
         const titleAndcomment = getAllOCR(
           onlyChildren[i],
           "\n" + "  ".repeat(treeIndex[i].length + indent),
-          true,
-          mdsize
+          true
         )
         if (onlyChildren[i].noteTitle) {
           res =

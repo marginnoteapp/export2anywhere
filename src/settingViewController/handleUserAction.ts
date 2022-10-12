@@ -1,10 +1,10 @@
+import type { NSIndexPath, UITableView } from "marginnote"
+import { MN, openUrl, postNotification } from "marginnote"
 import { Addon } from "~/addon"
-import { checkInputCorrect } from "~/mergeMethod"
-import { CellViewType } from "~/enum"
-import { MN, openUrl, postNotification } from "~/sdk"
-import { _isModuleOFF } from "./settingView"
-import { UITableView, IRowInput, IRowSwitch, IRowSelect } from "~/typings"
+import { checkInputCorrect, ModuleKeyType } from "~/mergeMethod"
+import { CellViewType, IRowInput, IRowSelect, IRowSwitch } from "~/typings"
 import { byteLength } from "~/utils"
+import { _isModuleOFF } from "./settingView"
 
 function _tag2indexPath(tag: number): NSIndexPath {
   return NSIndexPath.indexPathForRowInSection(
@@ -28,7 +28,8 @@ async function tableViewDidSelectRowAtIndexPath(
     case CellViewType.Button:
       if (sec.key === "magicaction4card")
         postNotification(Addon.key + "ButtonClick", {
-          row
+          row,
+          type: "card"
         })
   }
 }
@@ -129,7 +130,7 @@ function clickSelectButton(sender: UIButton) {
   const menuController = MenuController.new()
   const height = 44
   const zero = 0.00001
-
+  const cacheModuleOFF: Partial<Record<ModuleKeyType, boolean>> = {}
   menuController.commandTable = row.option.map((item, index) => ({
     title: item,
     object: self,

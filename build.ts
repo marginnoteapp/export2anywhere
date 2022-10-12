@@ -92,7 +92,7 @@ const plugins: Plugin[] = [
     autoImport({
       imports: [
         {
-          "~/sdk": ["console"]
+          marginnote: ["console"]
         }
       ],
       dts: false

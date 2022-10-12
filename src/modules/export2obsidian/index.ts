@@ -1,7 +1,7 @@
 import { lang } from "./lang"
-import { CellViewType } from "~/enum"
+import { CellViewType } from "~/typings"
 import { defineConfig } from "~/profile"
-import { MN, openUrl, showHUD } from "~/sdk"
+import { MN, openUrl, showHUD } from "marginnote"
 import { makeObsidianOutline } from "./utils"
 const { link, intro, lable, option, help, hud } = lang
 

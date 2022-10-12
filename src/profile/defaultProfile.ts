@@ -1,5 +1,5 @@
+import { MN } from "marginnote"
 import { Addon } from "~/addon"
-import { MN } from "~/sdk"
 import { RewriteCase } from "./typings"
 
 const defaultGlobalProfile = {
@@ -118,7 +118,5 @@ const defaultNotebookProfile = {
     defaultTemplate: [0]
   }
 }
-
 export const rewriteSelection: RewriteCase[] = []
-
 export { defaultGlobalProfile, defaultDocProfile, defaultNotebookProfile }

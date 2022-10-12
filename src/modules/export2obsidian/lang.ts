@@ -1,4 +1,4 @@
-import { MN } from "~/sdk"
+import { MN } from "marginnote"
 
 const zh = {
   intro: "导出卡片树到Obsidian",

@@ -1,5 +1,3 @@
-import { MN } from "~/sdk"
-import { IConfig, noteComment } from "~/typings"
 import {
   IAllProfile,
   IDocProfile,
@@ -9,6 +7,8 @@ import {
 } from "./typings"
 import semver from "semver"
 import { Addon } from "~/addon"
+import { MN, noteComment } from "marginnote"
+import { IConfig } from "~/typings"
 import { rewriteSelection } from "./defaultProfile"
 
 /**

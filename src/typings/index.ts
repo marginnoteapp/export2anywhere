@@ -1,3 +1,6 @@
+export * from "./Module"
+export * from "./DataSource"
+
 export const enum CellViewType {
   PlainText = 0,
   Switch = 1,

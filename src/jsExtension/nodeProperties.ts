@@ -1,12 +1,14 @@
-import { MbBookNote } from "~/typings"
 import {
-  MN,
-  removeHighlight,
+  getAllCommnets,
   getAllTags,
   getAllText,
+  getDocURL,
   getExcerptText,
-  getAllCommnets
-} from "~/sdk"
+  getLocalDataByKey,
+  MbBookNote,
+  MN,
+  removeHighlight
+} from "marginnote"
 import { dateFormat, getSerialInfo } from "~/utils"
 import { render } from "~/utils/third party/mustache"
 
@@ -51,6 +53,28 @@ const func: {
   }
 }
 
+const fetchDataFromMetadata = () => {
+  if (self.metadata.lastFetch && Date.now() - self.metadata.lastFetch < 100) {
+    self.metadata.lastFetch = Date.now()
+  } else {
+    self.metadata.lastFetch = Date.now()
+    const data = getLocalDataByKey("metadata_profile_doc")?.[self.docmd5!]
+    if (data === undefined) {
+      self.metadata.data = undefined
+    } else {
+      const { pageOffset, citeKey, reference } = data.addon
+      const metadata = JSON.parse(data.additional.data)
+      self.metadata.data = {
+        pageOffset,
+        citeKey,
+        reference,
+        metadata
+      }
+    }
+  }
+  return self.metadata.data
+}
+
 export const getNodeProperties = (node: MbBookNote, template: string) => {
   /** Reduce unnecessary memory consumption */
   const isRequire = (key: string) => template.includes(key)
@@ -76,7 +100,18 @@ export const getNodeProperties = (node: MbBookNote, template: string) => {
     },
     page: isRequire("page.") && {
       start: node.startPage,
-      end: node.endPage === node.startPage ? undefined : node.endPage
+      end: node.endPage === node.startPage ? undefined : node.endPage,
+      real: isRequire("page.") && {
+        start: undefine2undefine(
+          node.startPage,
+          k => k - Number(fetchDataFromMetadata()?.pageOffset ?? 0)
+        ),
+        end: undefine2undefine(node.endPage, k =>
+          k === node.startPage
+            ? undefined
+            : k - Number(fetchDataFromMetadata()?.pageOffset ?? 0)
+        )
+      }
     },
     tags: isRequire("tags") && getAllTags(node, false),
     allText: isRequire("allText") && getAllText(node),
@@ -93,10 +128,32 @@ export const getNodeProperties = (node: MbBookNote, template: string) => {
         node.docMd5,
         t => MN.db.getDocumentById(t)?.docTitle
       ),
+      url: {
+        pure: undefine2undefine(getDocURL(), t => t),
+        md: undefine2undefine(
+          getDocURL(),
+          t =>
+            `[${
+              node.docMd5
+                ? MN.db.getDocumentById(node.docMd5)?.docTitle ?? "MarginNote"
+                : "MarginNote"
+            }](marginnote3app://note/${t}`
+        ),
+        html: undefine2undefine(
+          getDocURL(),
+          t =>
+            `<a href="marginnote3app://note/${t}" class="MNDoc">${
+              node.docMd5
+                ? MN.db.getDocumentById(node.docMd5)?.docTitle ?? "MarginNote"
+                : "MarginNote"
+            }</a>`
+        )
+      },
       path: undefine2undefine(
         node.docMd5,
         t => MN.db.getDocumentById(t)?.pathFile
-      )
+      ),
+      ...(fetchDataFromMetadata() ?? {})
     },
     notebook: isRequire("notebook.") && {
       title: undefine2undefine(

@@ -1,5 +1,6 @@
 import { mainfest } from "../mainfest"
-import { MN } from "./sdk"
+import { MN } from "marginnote"
+import type { SQLiteDatabase } from "marginnote"
 
 class MNADDON {
   path!: string
@@ -16,7 +17,9 @@ class MNADDON {
   github = mainfest.github
   forum = MN.isZH ? mainfest.forumZH : mainfest.forum
   doc = MN.isZH ? mainfest.docZH : mainfest.doc
+  zoteroDB?: SQLiteDatabase
   lastVersion!: string
+  zoteroVersion!: number
 }
 
 export const Addon = new MNADDON()

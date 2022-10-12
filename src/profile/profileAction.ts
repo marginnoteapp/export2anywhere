@@ -2,19 +2,19 @@ import { encode, decode } from "~/utils/third party/base64"
 import { Addon } from "~/addon"
 import { moduleNameList } from "~/dataSource"
 import { layoutViewController } from "~/jsExtension/switchPanel"
-import {
-  selectIndex,
-  undoGroupingWithRefresh,
-  confirm,
-  setLocalDataByKey,
-  showHUD
-} from "~/sdk"
-import { MbBookNote } from "~/typings"
 import { dateFormat } from "~/utils"
 import { readProfile, rewriteProfile, writeProfile } from "."
 import { lang } from "./lang"
 import { Range, ManageProfileItems, RewriteRange } from "./typings"
 import semver from "semver"
+import {
+  confirm,
+  MbBookNote,
+  selectIndex,
+  setLocalDataByKey,
+  showHUD,
+  undoGroupingWithRefresh
+} from "marginnote"
 
 export function removeProfile() {
   NSUserDefaults.standardUserDefaults().removeObjectForKey(

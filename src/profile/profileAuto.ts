@@ -1,5 +1,4 @@
 import { Addon } from "~/addon"
-import { getLocalDataByKey, setLocalDataByKey, delay, MN } from "~/sdk"
 import { deepCopy } from "~/utils"
 import {
   defaultNotebookProfile,
@@ -18,6 +17,7 @@ import {
 } from "./typings"
 import { updateProfileDataSource, refreshPanel } from "./updateDataSource"
 import { checkNewVerProfile, rewriteProfile } from "./utils"
+import { delay, getLocalDataByKey, MN, setLocalDataByKey } from "marginnote"
 
 export const readProfile: ReadPrifile = ({
   range,

@@ -1,8 +1,9 @@
 import { renderTemplateOfNodeProperties } from "~/jsExtension/nodeProperties"
-import { ICheckMethod, MbBookNote } from "~/typings"
-import { reverseEscape } from "~/utils"
 import { AnkiNote, AddTags, ExportMethod } from "./typings"
-import { fetch, OCNull2null } from "~/sdk"
+import { fetch, NSNull2Null } from "marginnote"
+import type { MbBookNote, NSNull } from "marginnote"
+import type { ICheckMethod } from "~/typings"
+import { reverseEscape } from "~/utils"
 
 export class AnkiConnect {
   api!: string
@@ -20,12 +21,12 @@ export class AnkiConnect {
         }
       }
     }).then(res => res.json())) as {
-      result: string[] | OCNull
-      error: string | OCNull
+      result: string[] | NSNull
+      error: string | NSNull
     }
     return {
-      result: OCNull2null(res.result),
-      error: OCNull2null(res.error)
+      result: NSNull2Null(res.result),
+      error: NSNull2Null(res.error)
     }
   }
   async getModelList() {
@@ -36,12 +37,12 @@ export class AnkiConnect {
         version: 6
       }
     }).then(res => res.json())) as {
-      result: string[] | OCNull
-      error: string | OCNull
+      result: string[] | NSNull
+      error: string | NSNull
     }
     return {
-      result: OCNull2null(res.result),
-      error: OCNull2null(res.error)
+      result: NSNull2Null(res.result),
+      error: NSNull2Null(res.error)
     }
   }
   async addNotes(notes: AnkiNote[], autoSync: boolean) {
@@ -77,13 +78,13 @@ export class AnkiConnect {
         }
       }
     }).then(res => res.json())) as {
-      result: (string | OCNull)[]
-      error: string | OCNull
+      result: (string | NSNull)[]
+      error: string | NSNull
     }
     autoSync && (await this.sync())
     return {
-      result: resAdd.result.map(k => OCNull2null(k)),
-      error: OCNull2null(resAdd.error)
+      result: resAdd.result.map(k => NSNull2Null(k)),
+      error: NSNull2Null(resAdd.error)
     }
   }
   async getDeckList() {
@@ -94,12 +95,12 @@ export class AnkiConnect {
         version: 6
       }
     }).then(res => res.json())) as {
-      result: string[] | OCNull
-      error: string | OCNull
+      result: string[] | NSNull
+      error: string | NSNull
     }
     return {
-      result: OCNull2null(res.result),
-      error: OCNull2null(res.error)
+      result: NSNull2Null(res.result),
+      error: NSNull2Null(res.error)
     }
   }
   async creatDeck(deck: string) {
@@ -113,12 +114,12 @@ export class AnkiConnect {
         }
       }
     }).then(res => res.json())) as {
-      result: number | OCNull
-      error: string | OCNull
+      result: number | NSNull
+      error: string | NSNull
     }
     return {
-      result: OCNull2null(res.result),
-      error: OCNull2null(res.error)
+      result: NSNull2Null(res.result),
+      error: NSNull2Null(res.error)
     }
   }
   async checkExist(note: AnkiNote) {
@@ -133,12 +134,12 @@ export class AnkiConnect {
         }
       }
     }).then(res => res.json())) as {
-      result: number[] | OCNull
-      error: string | OCNull
+      result: number[] | NSNull
+      error: string | NSNull
     }
     return {
-      result: OCNull2null(res.result),
-      error: OCNull2null(res.error)
+      result: NSNull2Null(res.result),
+      error: NSNull2Null(res.error)
     }
   }
   async sync() {

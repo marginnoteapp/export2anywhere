@@ -1,4 +1,3 @@
-import { CellViewType } from "~/enum"
 import { defineConfig } from "~/profile"
 import { checkRegArray, string2RegArray, doc } from "~/utils"
 import {
@@ -8,9 +7,10 @@ import {
   getExcerptText,
   getAllCommnets,
   getAllText
-} from "~/sdk"
+} from "marginnote"
 import { lang } from "./lang"
 import { FilterCards } from "./typings"
+import { CellViewType } from "~/typings"
 
 export default defineConfig({
   name: "MagicAction for Card",
@@ -58,7 +58,7 @@ export default defineConfig({
               case FilterCards.Excerpt:
                 return getExcerptText(node).text.join("\n")
               case FilterCards.Comment:
-                return getAllCommnets(node).nopic.join("\n")
+                return getAllCommnets(node).text.join("\n")
               default:
                 return `${title}\n${getAllText(node)}`
             }

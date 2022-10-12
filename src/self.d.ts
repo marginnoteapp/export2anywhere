@@ -1,12 +1,12 @@
-import {
-  UIView,
+import type { IDocProfile, IGlobalProfile, INotebookProfile } from "~/profile"
+import type {
+  MbBookNote,
   UIWindow,
   UITableView,
-  MbBookNote,
-  ISection,
-  UITableViewController
-} from "~/typings"
-import { IDocProfile, IGlobalProfile, INotebookProfile } from "~/profile"
+  UITableViewController,
+  DirectionOfSelection
+} from "marginnote"
+import type { ISection } from "./typings"
 
 declare global {
   const self: {
@@ -20,7 +20,35 @@ declare global {
       lastClickButton: number
       lastReaderViewWidth: number
     }
+    excerptStatus: {
+      isProcessNewExcerpt: boolean
+      isChangeExcerptRange: boolean
+      lastExcerptText: string
+      isModify: boolean
+      OCROnline: {
+        status: "begin" | "end" | "free"
+        times: number
+      }
+      lastRemovedComment:
+        | {
+            nodeNote: MbBookNote
+            note: MbBookNote
+            index: number
+          }
+        | undefined
+    }
     backupWaitTimes: number | undefined
+    metadata: {
+      data:
+        | {
+            pageOffset: string
+            citeKey: string
+            reference: string
+            metadata: any
+          }
+        | undefined
+      lastFetch: number
+    }
     webView: UIWebView
     view: UIView
     window: UIWindow
@@ -28,6 +56,10 @@ declare global {
     noteid: string
     notebookid: string
     tableView: UITableView
+    textSelectBar?: {
+      arrow: DirectionOfSelection
+      winRect: string
+    }
     customSelectedNodes: MbBookNote[]
     docProfile: IDocProfile
     globalProfile: IGlobalProfile
