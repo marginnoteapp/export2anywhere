@@ -1,4 +1,4 @@
-import { renderTemplateOfNodeProperties } from "~/jsExtension/nodeProperties"
+import { renderTemplateOfNodeProperties } from "~/JSExtension/nodeProperties"
 import { AnkiNote, AddTags, ExportMethod } from "./typings"
 import { fetch, NSNull2Null } from "marginnote"
 import type { MbBookNote, NSNull } from "marginnote"

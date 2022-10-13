@@ -10,3 +10,4 @@ test*
 .DS_Store
 .local_history
 endict*
+pnpm-lock.yaml

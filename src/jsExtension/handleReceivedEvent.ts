@@ -5,7 +5,7 @@ import {
   showHUD
 } from "marginnote"
 import { Addon } from "~/addon"
-import { layoutViewController } from "~/jsExtension/switchPanel"
+import { layoutViewController } from "~/JSExtension/switchPanel"
 import lang from "~/lang"
 import { saveProfile } from "~/profile"
 import handleURLScheme from "./handleURLScheme"

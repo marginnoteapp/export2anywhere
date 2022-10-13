@@ -1,5 +1,5 @@
 import { dataSourceIndex } from "~/dataSource"
-import { layoutViewController } from "~/jsExtension/switchPanel"
+import { layoutViewController } from "~/JSExtension/switchPanel"
 import { IGlobalProfile, IDocProfile, INotebookProfile } from "~/profile"
 import { IRowSwitch, IRowInlineInput, IRowInput, IRowSelect } from "~/typings"
 import { deepCopy } from "~/utils"

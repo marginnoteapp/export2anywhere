@@ -1,7 +1,7 @@
 import { encode, decode } from "~/utils/third party/base64"
 import { Addon } from "~/addon"
 import { moduleNameList } from "~/dataSource"
-import { layoutViewController } from "~/jsExtension/switchPanel"
+import { layoutViewController } from "~/JSExtension/switchPanel"
 import { dateFormat } from "~/utils"
 import { readProfile, rewriteProfile, writeProfile } from "."
 import { lang } from "./lang"

@@ -1,6 +1,5 @@
 import {
   defineLifeCycelHandler,
-  getObjCClassDeclar,
   isfileExists,
   openUrl,
   popup,
@@ -18,7 +17,7 @@ import {
   readProfile,
   removeProfile
 } from "~/profile"
-import { settingViewControllerInst } from "~/settingViewController"
+import SettingViewController from "~/SettingViewController"
 import { deepCopy } from "~/utils"
 import { gestureHandlers } from "./handleGestureEvent"
 import { eventHandlers } from "./handleReceivedEvent"
@@ -64,10 +63,6 @@ export default defineLifeCycelHandler({
       self.notebookProfile = deepCopy(defaultNotebookProfile)
       self.dataSource = deepCopy(dataSourcePreset)
 
-      const SettingViewController = JSB.defineClass(
-        getObjCClassDeclar("SettingViewController", "UITableViewController"),
-        settingViewControllerInst
-      )
       self.settingViewController = SettingViewController.new()
       self.settingViewController.dataSource = self.dataSource
       self.settingViewController.window = self.window

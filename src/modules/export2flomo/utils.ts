@@ -1,7 +1,7 @@
 import { reverseEscape } from "~/utils/input"
 import { MbBookNote, fetch, removeHighlight } from "marginnote"
 import { AddTags } from "./typings"
-import { renderTemplateOfNodeProperties } from "~/jsExtension/nodeProperties"
+import { renderTemplateOfNodeProperties } from "~/JSExtension/nodeProperties"
 
 export function getContent(node: MbBookNote, option: number) {
   const {
