@@ -8,7 +8,7 @@ import {
 } from "marginnote"
 import { Addon } from "~/addon"
 import { dataSourcePreset } from "~/dataSource"
-import lang from "~/lang"
+import lang from "./lang"
 import {
   defaultDocProfile,
   defaultGlobalProfile,

@@ -26,7 +26,7 @@ try {
 
 const footerText = `
 } catch (e) {
-  JSB.log("${mainfest.key}-error %@", String(e))
+  Application.sharedInstance().alert("${mainfest.title}-"+String(e))
 }
 `
 const outDir = isProd

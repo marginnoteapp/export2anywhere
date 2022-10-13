@@ -6,7 +6,7 @@ import {
 } from "marginnote"
 import { Addon } from "~/addon"
 import { layoutViewController } from "~/JSExtension/switchPanel"
-import lang from "~/lang"
+import lang from "./lang"
 import { saveProfile } from "~/profile"
 import handleURLScheme from "./handleURLScheme"
 import handleMagicAction from "./magicActionHandler"
@@ -55,16 +55,8 @@ export default defineEventHandlers<
   async onInputOver(sender) {
     if (!isThisWindow(sender)) return
     console.log("Input", "event")
-    const { name, key } = sender.userInfo
-    let { content } = sender.userInfo as { content: string }
+    const { content, name, key } = sender.userInfo
     showHUD(content ? lang.input_saved : lang.input_clear)
-    switch (key) {
-      case "pageOffset": {
-        const [a, b] = content.split(/\s*-\s*/).map(k => Number(k))
-        content = b === undefined ? content : String(a - b)
-        break
-      }
-    }
     await saveProfile(name, key, content)
   },
   async onAddonBroadcast(sender) {

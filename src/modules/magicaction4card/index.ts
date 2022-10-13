@@ -8,7 +8,7 @@ import {
   getAllCommnets,
   getAllText
 } from "marginnote"
-import { lang } from "./lang"
+import lang from "./lang"
 import { FilterCards } from "./typings"
 import { CellViewType } from "~/typings"
 

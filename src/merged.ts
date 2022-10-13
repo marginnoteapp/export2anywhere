@@ -1,13 +1,13 @@
-import lang from "./lang"
-import { modules, constModules } from "./modules"
-import { ICheckMethod, IActionMethod4Card } from "./typings"
-import { IAllProfile } from "./profile"
-import { showHUD } from "marginnote"
-export type ModuleKeyType = Exclude<keyof IAllProfile, "additional"> | "more"
+import { optionalModules, requiredModules } from "./modules"
+import type { ICheckMethod, IActionMethod4Card } from "./typings"
+import type { IAllProfile } from "./profile"
+import { MN, showHUD } from "marginnote"
+export type ModuleKeyType = Exclude<keyof IAllProfile, "additional">
+export type DataSourceSection = ModuleKeyType | "more"
 
 export const { actions4card, checkers } = Object.values({
-  ...constModules,
-  ...modules
+  ...requiredModules,
+  ...optionalModules
 }).reduce(
   (acc, module) => {
     module.settings.length &&
@@ -31,7 +31,7 @@ export const { actions4card, checkers } = Object.values({
   }
 )
 
-export const moduleKeys = Object.values(modules).reduce((acc, cur) => {
+export const moduleKeys = Object.values(optionalModules).reduce((acc, cur) => {
   acc.push(cur.key)
   return acc
 }, [] as ModuleKeyType[])
@@ -51,7 +51,14 @@ export async function checkInputCorrect(
       await checkers[key]({ input })
     }
   } catch (err) {
-    showHUD(err ? String(err) : lang.input_error, 3)
+    showHUD(
+      err
+        ? String(err)
+        : MN.isZH
+        ? "格式错误，请重新输入"
+        : "Input errors, please re-enter",
+      3
+    )
     return false
   }
   return true

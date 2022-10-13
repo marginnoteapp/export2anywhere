@@ -4,7 +4,7 @@ import { moduleNameList } from "~/dataSource"
 import { layoutViewController } from "~/JSExtension/switchPanel"
 import { dateFormat } from "~/utils"
 import { readProfile, rewriteProfile, writeProfile } from "."
-import { lang } from "./lang"
+import lang from "./lang"
 import { Range, ManageProfileItems, RewriteRange } from "./typings"
 import semver from "semver"
 import {

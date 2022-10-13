@@ -1,5 +1,4 @@
 import {
-  IAllProfile,
   IDocProfile,
   IGlobalProfile,
   INotebookProfile,
@@ -10,6 +9,7 @@ import { Addon } from "~/addon"
 import { MN, noteComment } from "marginnote"
 import { IConfig } from "~/typings"
 import { rewriteSelection } from "./defaultProfile"
+import { ModuleKeyType } from "~/merged"
 
 /**
  * @param link Card link
@@ -59,7 +59,7 @@ export const cacheTransformer = {
   }
 }
 
-export function defineConfig<T extends keyof IAllProfile>(options: IConfig<T>) {
+export function defineConfig<T extends ModuleKeyType>(options: IConfig<T>) {
   return options
 }
 

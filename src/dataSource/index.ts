@@ -1,13 +1,12 @@
-import lang from "./lang"
-import { more, constModules, modules } from "./modules"
-import { ModuleKeyType } from "./mergeMethod"
-import { ISection, IConfig, IRow } from "./typings"
+import { requiredModules, optionalModules } from "~/modules"
+import { ModuleKeyType } from "~/merged"
+import { ISection, IConfig, IRow } from "~/typings"
 import { CellViewType } from "~/typings"
-import { serialSymbols } from "./utils"
+import { serialSymbols } from "~/utils"
+import lang from "./lang"
+import { more } from "./more"
 
-const { addon, magicaction4card } = constModules
-
-const genSection = (config: IConfig): ISection => {
+const genSection = (config: IConfig<ModuleKeyType>): ISection => {
   const rows: IRow[] = [
     {
       type: CellViewType.PlainText,
@@ -48,7 +47,10 @@ const genSection = (config: IConfig): ISection => {
   }
 }
 
-const genDataSource = (configs: IConfig[], magicaction4card: IConfig) => {
+const genDataSource = (
+  configs: IConfig<ModuleKeyType>[],
+  magicaction4card: IConfig<"magicaction4card">
+) => {
   const dataSource: ISection[] = []
   const moduleNameList: { key: string[]; name: string[] } = {
     key: [],
@@ -70,7 +72,7 @@ const genDataSource = (configs: IConfig[], magicaction4card: IConfig) => {
           module: config.key as ModuleKeyType,
           help:
             lang.magicaction_from_which_module(config.name) +
-            (k.help ? "\n" + k.help : "")
+            (k.help ? k.help : "")
         }))
       )
   })
@@ -81,7 +83,9 @@ const genDataSource = (configs: IConfig[], magicaction4card: IConfig) => {
     }
   })
 
-  const Action4CardSection = genSection(magicaction4card)
+  const Action4CardSection = genSection(
+    magicaction4card as IConfig<ModuleKeyType>
+  )
   Action4CardSection.rows.push(...actions4card)
 
   // 更新 quickSwitch 为 moduleList
@@ -114,9 +118,9 @@ function genDataSourceIndex(dataSource: ISection[]) {
   }, {} as Record<ModuleKeyType, Record<string, [number, number]>>)
 }
 
+const { addon, magicaction4card } = requiredModules
 export const { dataSource: dataSourcePreset, moduleNameList } = genDataSource(
-  // @ts-ignore
-  [addon, ...Object.values(modules)],
+  [addon, ...Object.values(optionalModules)] as IConfig<ModuleKeyType>[],
   magicaction4card
 )
 export const dataSourceIndex = genDataSourceIndex(dataSourcePreset)

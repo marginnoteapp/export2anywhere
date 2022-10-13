@@ -2,17 +2,14 @@ import { IGlobalProfile, IDocProfile } from "~/profile"
 import { CellViewType, ISettingInput } from "~/typings"
 import { MN, showHUD, openUrl } from "marginnote"
 import { defineConfig } from "~/profile"
-import { lang } from "./lang"
+import lang from "./lang"
 import { ExportMethod } from "./typings"
 import { AnkiConnect, checker, genAnkiNote, genUrlScheme } from "./utils"
-
-const { link, intro } = lang
 
 export default defineConfig({
   name: "Export to Anki",
   key: "export2anki",
-  intro,
-  link,
+  intro: lang.intro,
   settings: [
     {
       type: CellViewType.Select,

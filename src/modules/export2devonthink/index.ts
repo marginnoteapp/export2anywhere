@@ -1,6 +1,6 @@
 import { CellViewType } from "~/typings"
 import { openUrl, showHUD } from "marginnote"
-import { lang } from "./lang"
+import lang from "./lang"
 import { getContent } from "./utils"
 import { defineConfig } from "~/profile"
 const { link, intro, lable, option, help, hud } = lang

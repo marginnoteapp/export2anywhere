@@ -1,4 +1,4 @@
-import { lang } from "./lang"
+import lang from "./lang"
 import { CellViewType } from "~/typings"
 import { defineConfig } from "~/profile"
 import { MN, openUrl, showHUD } from "marginnote"

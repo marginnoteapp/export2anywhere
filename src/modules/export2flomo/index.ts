@@ -1,17 +1,14 @@
 import { CellViewType } from "~/typings"
 import { showHUD, openUrl } from "marginnote"
 import { defineConfig } from "~/profile"
-import { lang } from "./lang"
+import lang from "./lang"
 import { ExportMethod } from "./typings"
 import { getContent, exportByAPI } from "./utils"
-
-const { link, intro } = lang
 
 export default defineConfig({
   name: "Export to Flomo",
   key: "export2flomo",
-  intro,
-  link,
+  intro: lang.intro,
   settings: [
     {
       type: CellViewType.Select,

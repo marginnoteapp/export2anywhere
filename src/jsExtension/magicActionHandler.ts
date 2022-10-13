@@ -8,8 +8,8 @@ import {
   UIAlertViewStyle,
   undoGroupingWithRefresh
 } from "marginnote"
-import lang from "~/lang"
-import { actions4card, checkInputCorrect } from "~/mergeMethod"
+import lang from "./lang"
+import { actions4card, checkInputCorrect } from "~/merged"
 import { PanelControl } from "~/modules/addon/typings"
 import { getMNLinkValue, manageProfileAction } from "~/profile"
 import { CellViewType, IRowButton } from "~/typings"
